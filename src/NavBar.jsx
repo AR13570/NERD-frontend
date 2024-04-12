@@ -30,7 +30,7 @@ export default function Navbar({ user, setUser }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   return (
-    <div className="bg-slate-100 w-full h-12">
+    <div className="bg-[#635985] w-full h-12 border-b-[1px] border-[#443C68] text-white">
       <div className="flex  items-center px-4 py-2">
         <div className=" text-2xl font-bold flex-grow text-center">
           Ramaiah Institute of Technology
@@ -38,15 +38,12 @@ export default function Navbar({ user, setUser }) {
         {user != "" && (
           <>
             <button
-              className="text-indigo-950"
+              className=""
               aria-label="menu"
               aria-describedby={id}
               onClick={handleClick}
             >
-              <AccountCircleIcon
-                className="text-indigo-950 text-4xl"
-                fontSize="large"
-              />
+              <AccountCircleIcon className=" text-4xl" fontSize="large" />
             </button>
             <Popover
               id={id}
@@ -63,40 +60,43 @@ export default function Navbar({ user, setUser }) {
                 unmount: { scale: 0, y: 25 },
               }}
             >
-              <div className=" flex items-center gap-4 border-b py-2 px-4 bg-slate-100">
-                <div className="inline-flex items-center justify-center w-12 h-12 text-xl text-white bg-red-500 rounded-full">
-                  {user.slice(0, 2)}
-                </div>
-                <div>
-                  <Typography variant="h6" color="blue-gray">
-                    {user}
-                  </Typography>
-                  {/* <Typography
+              <div className=" flex flex-col items-center gap-4 py-2 px-4 bg-[#221841] border border-[#5b4c88]">
+                <div className="flex flex-row gap-8 items-center">
+                  <div className="inline-flex items-center justify-center w-12 h-12 text-xl text-white bg-red-500 rounded-full">
+                    {user.slice(0, 2)}
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold text-xl">
+                      {user}
+                    </div>
+
+                    {/* <Typography
                 variant="small"
                 color="gray"
                 className="font-medium text-blue-gray-500"
               >
                 1MS20CS023
               </Typography> */}
+                  </div>
+                </div>
+                <div className="flex justify-center pb-2 ">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      localStorage.removeItem("userType");
+                      localStorage.removeItem("accessToken");
+                      localStorage.removeItem("username");
+                      setUser("");
+                      navigate("/");
+                    }}
+                  >
+                    Log out
+                  </Button>
                 </div>
               </div>
               {/* <Typography className="p-2">UserName</Typography>
       <Typography className="p-2">Extra</Typography> */}
-              <div className="flex justify-center pb-2 bg-slate-100">
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    localStorage.removeItem("userType");
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("username");
-                    setUser("");
-                    navigate("/");
-                  }}
-                >
-                  Log out
-                </Button>
-              </div>
             </Popover>
           </>
         )}

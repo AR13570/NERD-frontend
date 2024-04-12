@@ -14,9 +14,9 @@ function App() {
   const [user, setUser] = useState("");
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col w-screen h-screen  ">
       <Navbar user={user} setUser={setUser} />
-      <div className=" h-full w-full">
+      <div className=" h-full w-full overflow-hidden">
         <Routes>
           <Route
             path="/"

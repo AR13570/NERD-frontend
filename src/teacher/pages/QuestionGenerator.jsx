@@ -61,7 +61,7 @@ export const QuestionGenerator = () => {
     setError(null);
 
     const formData = new FormData();
-    formData.append("pdf_file", file);
+    formData.append("file", file);
 
     const params = {
       sub: parseInt(sub, 10),

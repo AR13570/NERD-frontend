@@ -29,88 +29,98 @@ function generate_image() {
 }
 export default function TestCarousel() {
   const [tests, setTests] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    setLoading(true);
-    const access_token = localStorage.getItem("accessToken");
-    axios
-      .get("http://localhost:8000/test/all_teacher", {
-        headers: { Authorization: `Bearer ${access_token}` },
-      })
-      .then((res) => {
-        setTests(res.data.tests);
-      })
-      .catch((e) => {
-        console.log(e);
-        if (e.response.status == 401) {
-          localStorage.removeItem("userType");
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("username");
-          navigate("/");
-        }
-      })
-      .finally(() => setLoading(false));
+    if (refresh == true) {
+      setLoading(true);
+      const access_token = localStorage.getItem("accessToken");
+      axios
+        .get("http://localhost:8000/test/all_teacher", {
+          headers: { Authorization: `Bearer ${access_token}` },
+        })
+        .then((res) => {
+          setTests(res.data.tests);
+        })
+        .catch((e) => {
+          console.log(e);
+          if (e.response.status == 401) {
+            localStorage.removeItem("userType");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("username");
+            navigate("/");
+          }
+        })
+        .finally(() => setLoading(false));
+      setRefresh(false);
+    }
   }, [refresh]);
   const images = [pic1, pic2, pic3, pic4, pic5];
-  const getRandomIndex = () => Math.floor(Math.random() * images.length);
+  const dummy = [...tests, ...tests, ...tests, ...tests, ...tests, ...tests];
   return (
-    <div className="flex  flex-row  gap-3 justify-center w-full  p-3">
+    <div className="grid grid-cols-3  gap-x-6 gap-y-8 justify-center w-full  p-4 h-full">
       {!loading ? (
-        tests.map((cardData, index) => {
+        dummy.map((cardData, index) => {
           return (
             <div
               key={index}
-              className=" flex flex-col w-[300px] m-4 h-[500px] bg-white rounded-lg"
+              className="relative flex flex-col h-[340px] bg-white rounded-lg"
             >
-              <Chip
-                icon={<AccessTimeIcon />}
-                color="warning"
-                className="ml-4 my-2  w-fit"
-                label={cardData["duration"] + " mins"}
+              <img
+                src={generate_image()}
+                className={
+                  cardData["is_active"]
+                    ? "flex w-full h-full rounded-lg border bg-cover grayscale-0 "
+                    : "flex w-full h-full rounded-lg border bg-cover grayscale cursor-not-allowed"
+                }
+                alt={cardData["subject"]}
               />
-              <div className="w-full h-full flex flex-col justify-start items-center">
-                <img
-                  src={generate_image()}
-                  className={
-                    cardData["is_active"]
-                      ? "flex w-[95%] h-[200px]  bg-cover grayscale-0 "
-                      : "flex w-[95%] h-[200px]  bg-cover grayscale cursor-not-allowed"
-                  }
-                  alt={cardData["subject"]}
-                />
-                <div
-                  className={
-                    cardData["is_active"]
-                      ? "text-2xl font-bold text-black"
-                      : "text-2xl font-bold text-slate-500 cursor-not-allowed"
-                  }
-                >
-                  {cardData["subject"]}
+              <div className="absolute  w-full h-full bg-gradient-to-t from-black via-transparent/80 to-transparent rounded-lg">
+                <div className="flex flex-row mt-[50%] w-full justify-between items-start pl-4 pr-2">
+                  <div className=" text-white font-bold text-3xl  line-clamp-2">
+                    {cardData["subject"]}
+                  </div>
+                  <div className="text-xs font-bold  m-1.5 ">
+                    <div className="rounded-full  bg-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
+                      <div>
+                        <AccessTimeIcon />
+                      </div>
+                      <div>{cardData["duration"] + " mins"}</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="h-28 px-3 w-full overflow-y-auto">
+                <div className=" text-white font-semibold text-justify text-xs mt-2 px-4 line-clamp-3">
+                  {cardData["description"]}
+                </div>
+
+                <div className=" absolute top-0 right-0 w-full  text-sm font-bold justify-end flex p-1.5">
                   <div
                     className={
                       cardData["is_active"]
-                        ? "text-black  h-fit flex text-justify content-center text-ellipsis truncate text-md  pt-2 "
-                        : "text-slate-500 cursor-not-allowed h-fit flex text-justify content-center text-ellipsis truncate text-md  pt-2"
+                        ? "flex flex-row items-center rounded-tr-md rounded-bl-lg rounded-tl-sm rounded-br-sm px-2 border-[3px] border-green-500 bg-white"
+                        : "flex flex-row items-center rounded-tr-md rounded-bl-lg rounded-tl-sm rounded-br-sm px-2 border-[3px] border-red-500 bg-white/80"
                     }
-                  ></div>
-                  {cardData["description"]}
-                </div>
-                <div className=" flex-1 flex-col  place-content-end mb-3 ">
-                  <div className="  text-black items-center  justify-end flex">
-                    <div className="flex text-sm font-semibold">Inactive</div>
+                  >
+                    <div
+                      className={
+                        cardData["is_active"]
+                          ? "  text-green-500"
+                          : " text-red-500"
+                      }
+                    >
+                      {cardData["is_active"] ? "Active" : "Inactive"}
+                    </div>
                     <Switch
                       className={
                         cardData["is_active"]
-                          ? " text-white rounded-full justify-center content-center  "
+                          ? " text-white rounded-full justify-center content-center "
                           : " text-white cursor-not-allowed rounded-full justify-center content-center  "
                       }
                       checked={cardData["is_active"]}
                       onChange={() => {
                         const prev = tests;
-
+                        const access_token =
+                          localStorage.getItem("accessToken");
                         axios
                           .post(
                             "http://localhost:8000/test/change_status",
@@ -120,13 +130,15 @@ export default function TestCarousel() {
                                 test_id: cardData._id,
                                 is_active: !cardData.is_active,
                               },
+                              headers: {
+                                Authorization: `Bearer ${access_token}`,
+                              },
                             }
                           )
                           .then(() => setRefresh(true))
                           .catch((e) => console.log(e));
                       }}
                     />{" "}
-                    <div className="flex text-sm font-semibold">Active</div>
                   </div>
                 </div>
               </div>

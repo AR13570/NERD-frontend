@@ -252,13 +252,13 @@ const StudentHomePage = () => {
   }, []);
 
   return (
-    <div className="bg-indigo-950 h-full w-full">
+    <div className="bg-[#1a1331] h-full w-full ">
       {/* <HeaderFile /> */}
-      <div className="text-stone-200 text-center text-2xl font-semibold h-10 pt-3">
-        Your upcoming tests
-      </div>
-      <div className="flex w-full h-full text-indigo-950 ">
-        {" "}
+
+      <div className="flex flex-col w-full h-full text-indigo-950 overflow-y-auto">
+        <div className="text-stone-200  text-4xl font-bold h-10 p-4 ">
+          Your upcoming tests
+        </div>
         {!loading ? (
           allTests.length > 0 ? (
             <TestCarousel allTests={allTests} />

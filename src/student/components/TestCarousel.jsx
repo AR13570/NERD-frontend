@@ -53,8 +53,8 @@ export default function TestCarousel({ allTests }) {
     ...allTests,
   ];
   return (
-    <div className="w-full h-full bg-indigo-950 my-6">
-      <div className="grid grid-cols-4 gap-4 w-full  bg-indigo-950 overflow-x-hidden px-6 py-6">
+    <div className="w-full h-full my-6">
+      {/* <div className="grid grid-cols-4 gap-4 w-full  bg-indigo-950 overflow-x-hidden px-6 py-6">
         {allTests.length >= 0 &&
           allTests.map((cardData, index) => {
             return (
@@ -117,6 +117,45 @@ export default function TestCarousel({ allTests }) {
                         Take Test
                       </Button>
                     </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div> */}
+      <div className="grid grid-cols-3  gap-x-6 gap-y-8 justify-center w-full  p-4 h-full  ">
+        {allTests.length >= 0 &&
+          allTests.map((cardData, index) => {
+            return (
+              <div
+                key={index}
+                className="relative flex flex-col h-[370px] bg-white rounded-lg"
+              >
+                <img
+                  src={generate_image()}
+                  className={
+                    cardData["is_active"]
+                      ? "flex w-full h-full rounded-lg border bg-cover grayscale-0 "
+                      : "flex w-full h-full rounded-lg border bg-cover grayscale cursor-not-allowed"
+                  }
+                  alt={cardData["subject"]}
+                />
+                <div className="absolute top-0 left-0 text-xs font-bold  m-1.5 ">
+                  <div className="rounded-full  bg-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
+                    <div>
+                      <AccessTimeIcon />
+                    </div>
+                    <div>{cardData["duration"] + " mins"}</div>
+                  </div>
+                </div>
+                <div className="absolute  w-full h-full bg-gradient-to-t from-black via-transparent/80 to-transparent rounded-lg">
+                  <div className="flex flex-row mt-[45%] w-full justify-between items-start pl-4 pr-2">
+                    <div className=" text-white font-bold text-3xl  line-clamp-2">
+                      {cardData["subject"]}
+                    </div>
+                  </div>
+                  <div className=" text-white font-semibold text-justify text-xs mt-2 px-4 line-clamp-3">
+                    {cardData["description"]}
                   </div>
                 </div>
               </div>

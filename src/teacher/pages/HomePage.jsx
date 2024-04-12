@@ -16,9 +16,9 @@ const TeacherHomePage = () => {
     }
   }, []);
   return (
-    <div className="bg-violet-900 h-full w-full">
+    <div className="bg-white h-full w-full">
       <div className="flex h-full">
-        <div className="flex w-[450px] h-full bg-violet-950 p-4">
+        <div className="flex w-[450px] h-full bg-[#18122B]  p-4">
           <div className="flex flex-col">
             <Typography class="text-xl font-extrabold text-slate-100">
               Generate Questions and Answers
@@ -28,7 +28,7 @@ const TeacherHomePage = () => {
               document and Create a test
             </Typography>
             <Button
-              class="mb-4 bg-violet-100 text-base py-2 text-violet-950 font-bold rounded"
+              class="mb-4 bg-white text-base py-2 text-violet-950 font-bold rounded"
               onClick={() => {
                 navigate("/teacher/generate");
               }}
@@ -43,7 +43,7 @@ const TeacherHomePage = () => {
               View the grades of all the students and their respective answers{" "}
             </Typography>
             <Button
-              class="mb-4 bg-violet-100 text-base py-2 text-violet-950 font-bold rounded"
+              class="mb-4 bg-white text-base py-2 text-violet-950 font-bold rounded"
               onClick={() => {
                 navigate("/teacher/performance");
               }}
@@ -52,11 +52,11 @@ const TeacherHomePage = () => {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col h-full w-full">
-          <div className="text-stone-200 text-center text-2xl h-10 pt-3 font-semibold">
+        <div className="flex flex-col h-full w-full bg-[#443C68]">
+          <div className="text-white text-3xl h-10 p-4 font-bold mb-5">
             Tests Created
           </div>
-          <div className="flex h-[85.4%] text-indigo-900 overflow-x-auto">
+          <div className="flex h-full overflow-y-auto">
             <TestCarousel />
           </div>
         </div>
