@@ -8,6 +8,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const TestTakingPage = ({ timeAllotted = 100 }) => {
+  const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState({});
   const { state } = useLocation();
   const [timerExpired, setTimerExpired] = useState(false);
@@ -94,6 +95,7 @@ const TestTakingPage = ({ timeAllotted = 100 }) => {
 
   const handleSubmit = () => {
     if (true || !submitted) {
+      setLoading(true);
       setSubmitted(true);
       // Separate subjective and mcq questions
       const subjectiveQuestions = [];
@@ -141,7 +143,8 @@ const TestTakingPage = ({ timeAllotted = 100 }) => {
         .catch((e) => {
           console.log(e);
           alert("An error occured while submitting");
-        });
+        })
+        .finally(() => setLoading(false));
     }
 
     // Store submitted data in state
@@ -196,8 +199,14 @@ const TestTakingPage = ({ timeAllotted = 100 }) => {
         }}
       >
         <ModalDialog>
-          <div className="text-lg font-bold">Submit?</div>
-          <div>{submitText[0]}</div>
+          <div className="text-lg font-bold">
+            {loading ? "Evaluating..." : "Submit?"}
+          </div>
+          <div>
+            {loading
+              ? "Your test is being automatically evaluated. Please wait."
+              : submitText[0]}
+          </div>
           <div className="grid grid-cols-4 gap-2">
             {questions.map((_, index) => (
               <div
@@ -211,7 +220,11 @@ const TestTakingPage = ({ timeAllotted = 100 }) => {
             ))}
           </div>
           <ModalClose />
-          <Button onClick={handleSubmit} disabled={timerExpired}>
+          <Button
+            onClick={handleSubmit}
+            disabled={timerExpired}
+            loading={loading}
+          >
             {submitText[1]}
           </Button>
         </ModalDialog>

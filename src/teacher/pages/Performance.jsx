@@ -88,7 +88,14 @@ export default function PerformancePage() {
   };
 
   const generateChartData = () => {
-    if (!selectedTest || !selectedTest.students) return [];
+    if (
+      !selectedTest ||
+      !selectedTest.students ||
+      selectedTest.students.length == 0
+    ) {
+      console.log("L time");
+      return [];
+    }
     const marksFrequency = {};
     let totalMarks = 0;
     let maxMark = 0;
@@ -131,13 +138,16 @@ export default function PerformancePage() {
   return (
     <div className="w-full flex flex-col h-full">
       <div className=" flex flex-col w-full h-full overflow-auto">
-        <div className="w-full flex justify-center py-4">
+        <div className="w-full flex justify-center py-4 bg-[#635985]">
           <Box>
-            <Button variant="outlined" onClick={handleClick}>
+            <button
+              className="border-2 border-white rounded-lg text-base font-semibold text-white px-3 py-2 bg-[#988ac9]"
+              onClick={handleClick}
+            >
               {selectedTest == undefined
                 ? "Select Subject"
                 : selectedTest["subject"]}
-            </Button>
+            </button>
           </Box>
           <Menu
             anchorEl={anchorEl}
@@ -169,11 +179,11 @@ export default function PerformancePage() {
           </Menu>
         </div>
         {testSelected ? (
-          selectedTest != undefined ? (
+          selectedTest != undefined && generateChartData().length > 0 ? (
             <>
               <div className="w-full h-1 bg-black"></div>
               <div className="w-full h-full flex flex-row">
-                <div className="w-[740px] bg-white h-full text-black flex flex-col">
+                <div className="w-[740px] bg-[#443C68] h-full text-black flex flex-col ">
                   {selectedTest && <PerfHistogram data={generateChartData()} />}
                   {selectedTest && (
                     <TableContainer
@@ -182,20 +192,19 @@ export default function PerformancePage() {
                         backgroundColor: "#f5f5f5",
                         maxWidth: "50%",
                         margin: "auto",
-                        marginBottom: "20px",
-
+                        marginBottom: "130px",
                         color: "#fff",
                       }}
                     >
-                      <Table>
+                      <Table className="border-2 border-white">
                         <TableHead>
-                          <TableRow>
+                          <TableRow className="bg-[#412e7c]">
                             <TableCell
                               align="center"
                               style={{
-                                textDecoration: "underline",
                                 fontWeight: "bold",
-                                color: theme.palette.primary.main,
+                                fontSize: "18px",
+                                color: "#ffffff",
                               }}
                             >
                               Metric
@@ -203,9 +212,9 @@ export default function PerformancePage() {
                             <TableCell
                               align="center"
                               style={{
-                                textDecoration: "underline",
                                 fontWeight: "bold",
-                                color: theme.palette.primary.main,
+                                fontSize: "18px",
+                                color: "#ffffff",
                               }}
                             >
                               Marks
@@ -215,13 +224,21 @@ export default function PerformancePage() {
                         <TableBody>
                           <TableRow>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               Highest Marks
                             </TableCell>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               {metrics.highest}
@@ -229,13 +246,21 @@ export default function PerformancePage() {
                           </TableRow>
                           <TableRow>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               Average Marks
                             </TableCell>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               {metrics.average}
@@ -243,13 +268,21 @@ export default function PerformancePage() {
                           </TableRow>
                           <TableRow>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               Lowest Marks
                             </TableCell>
                             <TableCell
-                              style={{ color: theme.palette.primary.main }}
+                              style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: "bold",
+                                fontSize: "15px",
+                              }}
                               align="center"
                             >
                               {metrics.lowest}
@@ -261,84 +294,97 @@ export default function PerformancePage() {
                   )}
                 </div>
                 <div className="h-full bg-black w-1"></div>
-                <div className="w-full h-full bg-white">
+                <div className="w-full h-full bg-[#18122B] ">
                   {" "}
                   {/* right side component */}
                   {selectedTest && (
-                    <TableContainer
-                      component={Paper}
-                      style={{
-                        backgroundColor: "#f5f5f5",
-                        marginTop: "50px",
-                        marginLeft: "80px",
-                        width: "900px",
-                      }}
-                    >
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                              align="center"
-                              style={{
-                                textDecoration: "underline",
-                                fontWeight: "bold",
-                                color: theme.palette.primary.main,
-                              }}
-                            >
-                              USN
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{
-                                textDecoration: "underline",
-                                fontWeight: "bold",
-                                color: theme.palette.primary.main,
-                              }}
-                            >
-                              Obtained Marks
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{
-                                textDecoration: "underline",
-                                fontWeight: "bold",
-                                color: theme.palette.primary.main,
-                              }}
-                            >
-                              Total Marks
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {selectedTest.students.map((student) => (
-                            <TableRow
-                              key={student.student_usn}
-                              onClick={() => handleUSNClick(student)}
-                              style={{ cursor: "pointer" }}
-                            >
+                    <div className="flex justify-center">
+                      <TableContainer
+                        component={Paper}
+                        style={{
+                          backgroundColor: "#7368a5",
+                          marginTop: "50px",
+                          width: "900px",
+                        }}
+                      >
+                        <Table className="border-2 border-white">
+                          <TableHead>
+                            <TableRow className="bg-[#412e7c]">
                               <TableCell
-                                style={{ color: theme.palette.primary.main }}
                                 align="center"
+                                style={{
+                                  fontWeight: "bold",
+                                  fontSize: "18px",
+                                  color: "#ffffff",
+                                }}
                               >
-                                {student.student_usn}
+                                USN
                               </TableCell>
                               <TableCell
-                                style={{ color: theme.palette.primary.main }}
                                 align="center"
+                                style={{
+                                  fontWeight: "bold",
+                                  fontSize: "18px",
+                                  color: "#ffffff",
+                                }}
                               >
-                                {student.marks}
+                                Obtained Marks
                               </TableCell>
                               <TableCell
-                                style={{ color: theme.palette.primary.main }}
                                 align="center"
+                                style={{
+                                  fontWeight: "bold",
+                                  fontSize: "18px",
+                                  color: "#ffffff",
+                                }}
                               >
-                                {student.total_marks}
+                                Total Marks
                               </TableCell>
                             </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
+                          </TableHead>
+                          <TableBody>
+                            {selectedTest.students.map((student) => (
+                              <TableRow
+                                key={student.student_usn}
+                                onClick={() => handleUSNClick(student)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <TableCell
+                                  style={{
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    color: "#ffffff",
+                                  }}
+                                  align="center"
+                                >
+                                  {student.student_usn}
+                                </TableCell>
+                                <TableCell
+                                  style={{
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    color: "#ffffff",
+                                  }}
+                                  align="center"
+                                >
+                                  {student.marks}
+                                </TableCell>
+                                <TableCell
+                                  style={{
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    color: "#ffffff",
+                                  }}
+                                  align="center"
+                                >
+                                  {student.total_marks}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </div>
                   )}
                   {openDialog && (
                     <PerfModal

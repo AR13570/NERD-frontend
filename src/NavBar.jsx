@@ -30,13 +30,13 @@ export default function Navbar({ user, setUser }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   return (
-    <div className="bg-[#635985] w-full h-12 border-b-[1px] border-[#443C68] text-white">
+    <div className="bg-[#635985] w-full h-12  text-white">
       <div className="flex  items-center px-4 py-2">
         <div className=" text-2xl font-bold flex-grow text-center">
           Ramaiah Institute of Technology
         </div>
         {user != "" && (
-          <>
+          <div className="absolute right-4">
             <button
               className=""
               aria-label="menu"
@@ -98,7 +98,7 @@ export default function Navbar({ user, setUser }) {
               {/* <Typography className="p-2">UserName</Typography>
       <Typography className="p-2">Extra</Typography> */}
             </Popover>
-          </>
+          </div>
         )}
       </div>
     </div>

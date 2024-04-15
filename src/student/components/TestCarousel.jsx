@@ -149,10 +149,22 @@ export default function TestCarousel({ allTests }) {
                   </div>
                 </div>
                 <div className="absolute  w-full h-full bg-gradient-to-t from-black via-transparent/80 to-transparent rounded-lg">
-                  <div className="flex flex-row mt-[45%] w-full justify-between items-start pl-4 pr-2">
-                    <div className=" text-white font-bold text-3xl  line-clamp-2">
+                  <div className="flex flex-row mt-[45%] w-full justify-between items-center pl-4 pr-2">
+                    <div className=" text-white font-bold text-3xl  line-clamp-2 ">
                       {cardData["subject"]}
                     </div>
+                    <button
+                      className="bg-green-600 text-white text-sm font-bold rounded-full px-3 py-1 "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        enterFullscreen();
+                        navigate("/student/test", {
+                          state: { testDetails: cardData },
+                        });
+                      }}
+                    >
+                      Take Test
+                    </button>
                   </div>
                   <div className=" text-white font-semibold text-justify text-xs mt-2 px-4 line-clamp-3">
                     {cardData["description"]}
