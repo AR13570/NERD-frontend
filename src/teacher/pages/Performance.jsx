@@ -139,9 +139,9 @@ export default function PerformancePage() {
     <div className="w-full flex flex-col h-full">
       <div className=" flex flex-col w-full h-full overflow-auto">
         <div className="w-full flex justify-center py-4 bg-[#635985]">
-          <Box>
+          <Box className="w-52 flex">
             <button
-              className="border-2 border-white rounded-lg text-base font-semibold text-white px-3 py-2 bg-[#988ac9]"
+              className="border-2 w-full border-white rounded-lg text-base font-semibold text-white px-3 py-2 bg-[#988ac9]"
               onClick={handleClick}
             >
               {selectedTest == undefined

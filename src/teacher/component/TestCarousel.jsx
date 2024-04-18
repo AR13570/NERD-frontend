@@ -60,7 +60,7 @@ export default function TestCarousel() {
   return (
     <div className="grid grid-cols-3  gap-x-6 gap-y-8 justify-center w-full  p-4 h-full">
       {!loading ? (
-        dummy.map((cardData, index) => {
+        tests.map((cardData, index) => {
           return (
             <div
               key={index}
@@ -76,12 +76,17 @@ export default function TestCarousel() {
                 alt={cardData["subject"]}
               />
               <div className="absolute  w-full h-full bg-gradient-to-t from-black via-transparent/80 to-transparent rounded-lg">
-                <div className="flex flex-row mt-[50%] w-full justify-between items-start pl-4 pr-2">
-                  <div className=" text-white font-bold text-3xl  line-clamp-2">
-                    {cardData["subject"]}
+                <div className="flex flex-row mt-[40%] text-white w-full justify-between items-start pl-4 pr-2">
+                  <div>
+                    <div className="  font-bold text-3xl  line-clamp-2">
+                      {cardData["subject"]}
+                    </div>
+                    <div className="whitespace-nowrap">
+                      Semester {cardData["sem"]}
+                    </div>
                   </div>
                   <div className="text-xs font-bold  m-1.5 ">
-                    <div className="rounded-full  bg-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
+                    <div className="rounded-full  bg-orange-500 text-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
                       <div>
                         <AccessTimeIcon />
                       </div>

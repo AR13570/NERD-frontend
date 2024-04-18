@@ -141,7 +141,7 @@ export default function TestCarousel({ allTests }) {
                   alt={cardData["subject"]}
                 />
                 <div className="absolute top-0 left-0 text-xs font-bold  m-1.5 ">
-                  <div className="rounded-full  bg-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
+                  <div className="rounded-full  bg-orange-500 text-white px-3 py-1 flex flex-row whitespace-nowrap items-center ">
                     <div>
                       <AccessTimeIcon />
                     </div>

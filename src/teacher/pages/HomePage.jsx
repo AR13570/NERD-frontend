@@ -3,9 +3,14 @@ import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import TestCarousel from "../component/TestCarousel";
 import { useNavigate } from "react-router-dom";
+import CieQuestionGenerator from "../component/CieQuestionGenerator";
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import ModalDialog from "@mui/joy/ModalDialog";
 
 const TeacherHomePage = () => {
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
   useEffect(() => {
     const userType = localStorage.getItem("userType");
     if (userType == null || userType != "teacher") {
@@ -50,6 +55,32 @@ const TeacherHomePage = () => {
             >
               Student Performance Analysis
             </Button>
+            <Typography class="mt-6 text-xl font-extrabold text-slate-100">
+              Generate CIE paper
+            </Typography>
+            <Typography class="text-base text-slate-100 my-3 content-between">
+              Generate a variety of questions and answers by uploading any
+              document and Create a test
+            </Typography>
+            <Button
+              class="mb-4 bg-white text-base py-2 text-violet-950 font-bold rounded"
+              onClick={() => {
+                setShow(true);
+              }}
+            >
+              Generate
+            </Button>
+            <Modal
+              open={show}
+              onClose={() => {
+                setShow(false);
+              }}
+            >
+              <ModalDialog>
+                <CieQuestionGenerator />
+                <ModalClose />
+              </ModalDialog>
+            </Modal>
           </div>
         </div>
         <div className="flex flex-col h-full w-full bg-[#443C68]">

@@ -1,26 +1,86 @@
-import * as React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { useTheme, ThemeProvider } from "@mui/material/styles";
+import React, { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 export default function PerfHistogram({ data }) {
-  const marks = data.map((item) => item.mark);
-  const frequencies = data.map((item) => item.frequency);
-  const theme = useTheme();
+  const chartRef = useRef(null);
 
+  useEffect(() => {
+    if (!chartRef.current || !data) return;
+
+    const marks = data.map((item) => item.mark);
+    const frequencies = data.map((item) => item.frequency);
+
+    const ctx = chartRef.current.getContext("2d");
+    const myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: marks,
+        datasets: [
+          {
+            label: "Frequency",
+            data: frequencies,
+            backgroundColor: "white",
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: "white",
+              
+            },
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              color: "white",
+              display: true,
+              text: "Marks",
+            },
+            type: "category",
+            ticks: {
+              color: "white",
+            },
+            border: {
+              color: "white",
+            },
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            title: {
+              color: "white",
+              display: true,
+              text: "Frequency",
+            },
+            type: "linear",
+            ticks: {
+              color: "white",
+            },
+            border: {
+              color: "white",
+            },
+            position: "left",
+          },
+        },
+      },
+    });
+
+    return () => {
+      myChart.destroy();
+    };
+  }, []);
+  console.log(data);
   return (
-    <BarChart
+    <canvas
+      ref={chartRef}
       width={500}
       height={300}
-      series={[
-        {
-          data: frequencies,
-          color: "lightblue",
-          label: "Frequency",
-          id: "frequency",
-        },
-      ]}
-      xAxis={[{ data: marks, scaleType: "band" }]}
-      yAxis={[{ type: "number", scaleType: "linear", position: "left" }]}
-    />
+      className="mx-8 my-8"
+    ></canvas>
   );
 }
